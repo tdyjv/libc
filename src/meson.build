@@ -214,6 +214,25 @@ wchar_files = files(
 	'wchar/wcwidth.c',
 )
 
+tdy_files = files(
+	'tdy/atoi.c',
+	'tdy/gmtime_r.c',
+	'tdy/isleap.c',
+	'tdy/iso_week_date_r.c',
+	'tdy/log-error.c',
+	'tdy/mktime.c',
+	'tdy/printf.c',
+	'tdy/scanf.c',
+	'tdy/str-upper-lower.c',
+	'tdy/strcasecmp.c',
+	'tdy/strftime.c',
+	'tdy/strlcat.c',
+	'tdy/strlcpy.c',
+	'tdy/strtod.c',
+	'tdy/strtok.c',
+	'tdy/week_of_year.c',
+	)
+
 # These files are used by all libc targets
 libc_common_files = [
 	assert_files,
@@ -227,6 +246,7 @@ libc_common_files = [
 	support_files,
 	time_files,
 	wchar_files,
+	tdy_files,
 ]
 
 # These files are used to compile libc for a build machine / your personal computer
@@ -390,7 +410,6 @@ libc = static_library(
 		gdtoa_include,
 	],
 	dependencies: [
-		printf_dep,
 		openlibm_dep,
 		host_machine_dep,
 	],
@@ -412,7 +431,6 @@ libc_hosted = static_library(
 		gdtoa_include,
 	],
 	dependencies: [
-		printf_dep,
 		openlibm_dep,
 		host_machine_dep,
 	],
@@ -434,7 +452,6 @@ libc_native = static_library(
 		gdtoa_include,
 	],
 	dependencies: [
-		printf_dep,
 		openlibm_dep,
 		build_machine_dep,
 	],
@@ -453,7 +470,6 @@ libc_dep = declare_dependency(
 		host_machine_arch_sys_include,
 		openlibm_includes,
 	],
-	dependencies: printf_include_dep,
 	compile_args: libc_compile_flags + libc_host_compile_flags,
 	link_args: libc_host_link_flags,
 	link_with: libc,
@@ -466,7 +482,6 @@ libc_native_dep = declare_dependency(
 		build_machine_arch_sys_include,
 		openlibm_includes,
 	],
-	dependencies: printf_include_dep,
 	compile_args: libc_compile_flags + libc_native_compile_flags,
 	link_args: libc_native_link_flags,
 	link_with: libc_native,
@@ -479,7 +494,6 @@ libc_hosted_dep = declare_dependency(
 		host_machine_arch_sys_include,
 		openlibm_includes,
 	],
-	dependencies: printf_include_dep,
 	compile_args: libc_compile_flags + libc_host_compile_flags,
 	link_args: libc_hosted_link_flags,
 	link_with: libc_hosted,
@@ -492,7 +506,6 @@ libc_hosted_native_dep = declare_dependency(
 		build_machine_arch_sys_include,
 		openlibm_includes,
 	],
-	dependencies: printf_include_dep,
 	compile_args: libc_compile_flags + libc_native_compile_flags,
 	link_args: libc_hosted_native_link_flags,
 	link_with: libc_native,

@@ -33,7 +33,7 @@
  */
 
 #include <libdef.h>
-#include <string.h>
+#include <string-extra.h>
 
 #if defined(__UNIT_TEST__)
 #define STRTOK      libc_strtok
@@ -43,14 +43,12 @@
 
 #define STRTOK      strtok
 #define STRTOK_R    strtok_r
-#endif /* if defined(__UNIT_TEST__) */
+#endif
 
 char *STRTOK_R(char *s, const char *delim, char **last)
 {
-    char *spanp;
-    char *tok;
-    int c;
-    int sc;
+    char *spanp, *tok;
+    int c, sc;
 
     if ((s == NULL) && ((s = *last) == NULL))
     {
@@ -105,7 +103,7 @@ cont:
                 *last = s;
                 return (tok);
             }
-        } while(sc != 0);
+        } while (sc != 0);
     }
 
     /* NOTREACHED */
@@ -117,45 +115,3 @@ char *STRTOK(char *s, const char *delim)
 
     return (STRTOK_R(s, delim, &last));
 }
-
-#ifdef DEBUG_STRTOK
-/*
- * Test the tokenizer.
- */
-int main(void)
-{
-    char blah[80];
-    char test[80];
-    char *brkb;
-    char *brkt;
-    char *phrase;
-    char *sep;
-    char *word;
-
-    sep = "\\/:;=-";
-    phrase = "foo";
-
-    printf("String tokenizer test:\n");
-    strcpy(test, "This;is.a:test:of=the/string\\tokenizer-function.");
-
-    for (word = strtok(test, sep); word; word = strtok(NULL, sep))
-    {
-        printf("Next word is \"%s\".\n", word);
-    }
-
-    strcpy(test, "This;is.a:test:of=the/string\\tokenizer-function.");
-
-    for (word = strtok_r(test, sep, &brkt); word; word = strtok_r(NULL, sep, &brkt))
-    {
-        strcpy(blah, "blah:blat:blab:blag");
-
-        for (phrase = strtok_r(blah, sep, &brkb); phrase; phrase = strtok_r(NULL, sep, &brkb))
-        {
-            printf("So far we're at %s:%s\n", word, phrase);
-        }
-    }
-
-    return (0);
-}
-
-#endif /* DEBUG_STRTOK */

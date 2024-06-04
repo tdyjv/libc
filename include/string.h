@@ -7,6 +7,7 @@ extern "C" {
 
 #include <stddef.h>
 #include <stdint.h>
+#include <string-extra.h>
 
 #pragma mark - memory -
 

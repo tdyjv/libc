@@ -153,7 +153,7 @@ if meson.is_cross_build() and meson.is_subproject() == false
 		c_args: '-fstack-protector-all',
 		link_args: [
 			linker_script_flags,
-			map_file.format(meson.current_build_dir()+'/sample_app'),
+			native_map_file.format(meson.current_build_dir()+'/sample_app'),
 		],
 		link_depends: linker_script_deps,
 		native: false

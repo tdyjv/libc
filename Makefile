@@ -44,6 +44,8 @@ endif
 
 ifeq ($(DEBUG),1)
 	INTERNAL_OPTIONS += -Ddebug=true -Doptimization=g
+else	
+	INTERNAL_OPTIONS += -Doptimization=2
 endif
 
 ifneq ($(SANITIZER),none)
@@ -75,9 +77,14 @@ package: default docs
 reconfig:
 	$(Q) $(MESON) $(BUILDRESULTS) --reconfigure $(INTERNAL_OPTIONS) $(OPTIONS)
 
+.PHONY: config
+
+config : $(CONFIGURED_BUILD_DEP)
+
 # Runs whenever the build has not been configured successfully
 $(CONFIGURED_BUILD_DEP):
 	$(Q) $(MESON) setup $(BUILDRESULTS) $(INTERNAL_OPTIONS) $(OPTIONS)
+	sed -i 's%csrDT%csrD%' $(CONFIGURED_BUILD_DEP)
 
 .PHONY: cppcheck
 cppcheck: | $(CONFIGURED_BUILD_DEP)

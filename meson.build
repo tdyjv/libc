@@ -8,8 +8,8 @@ project('Embedded Artistry libc',
 		'optimization=2',
 		# `build.*` options affect `native: true targets`
 		# plain options affect `native: false` targets.
-		'c_std=c11', 'build.c_std=c11',
-		'cpp_std=c++11', 'build.cpp_std=c++11',
+		'c_std=c17', 'build.c_std=c17',
+		'cpp_std=c++17', 'build.cpp_std=c++17',
 	],
 	license: 'MIT',
 	meson_version: '>=0.58.0',
